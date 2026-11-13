@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumple 22 primaa! </title>
+    <!-- Fuente estilo arcade / retro -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #1a1c23;
+            color: #f0f0f5;
+            font-family: 'Press Start 2P', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+        .game-container {
+            width: 100%;
+            max-width: 750px;
+            background: #2b2d42;
+            border: 4px solid #ef233c;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(239, 35, 60, 0.4);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-size: 18px;
+            color: #ffd166;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        p {
+            font-size: 11px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #e2eafc;
+        }
+        .avatar-box {
+            margin: 15px auto;
+            width: 90px;
+            height: 90px;
+            border: 3px dashed #ffd166;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .avatar-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: pixelated;
+        }
+        .btn {
+            background-color: #ef233c;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 4px 0 #8d0801;
+            transition: all 0.1s ease;
+            margin: 10px 5px;
+        }
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #8d0801;
+        }
+        .btn:hover {
+            background-color: #d90429;
+        }
+        input[type="text"] {
+            font-family: 'Press Start 2P', monospace;
+            background: #111;
+            border: 2px solid #8d0801;
+            color: #fff;
+            padding: 10px;
+            font-size: 10px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .photo-frame {
+            border: 4px solid #ffd166;
+            background: #000;
+            padding: 10px;
+            margin: 15px auto;
+            max-width: 300px;
+            border-radius: 4px;
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+        .year-tag {
+            background: #ffd166;
+            color: #1a1c23;
+            padding: 4px 8px;
+            font-size: 9px;
+            display: inline-block;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+        .marketing-card {
+            background: #1e1e2f;
+            border: 2px dashed #4ea8de;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: left;
+            font-size: 10px;
+        }
+        .marketing-card span {
+            color: #4ea8de;
+        }
+        .controls-hint {
+            font-size: 8px;
+            color: #8d99ae;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        
+        <!-- PANTALLA 0: INICIO -->
+        <div id="screen-0" class="screen active">
+            <h1>¡NIVEL 22 DESBLOQUEADO!</h1>
+            <div class="avatar-box">
+                <img src="avatar.png" alt="Tu Avatar">
+            </div>
+            <p>Bienvenida al sistema de cumple de tu prima.<br>Presioná START para iniciar.</p>
+            <button class="btn" onclick="nextScreen(1)">▶ START</button>
+        </div>
+
+        <!-- PANTALLA 1: MINI-JUEGO DE FECHA -->
+        <div id="screen-1" class="screen">
+            <h1>MISIÓN 1: CHECKPOINT</h1>
+            <p>Para avanzar, el sistema de seguridad temporal necesita verificar un dato clave...</p>
+            <p style="color: #ffd166;">¿Qué día es hoy? </p>
+            <input type="text" id="date-input" placeholder="...">
+            <br>
+            <button class="btn" onclick="checkDate()">Comprobar</button>
+            <p id="error-msg" style="color: #ef233c; font-size: 9px; margin-top: 10px; display: none;">Nop </p>
+        </div>
+
+        <!-- PANTALLA 2: FOTOS -->
+        <div id="screen-2" class="screen">
+            <h1>MISIÓN 2: MÁQUINA DEL TIEMPO</h1>
+            <p>Cargando recuerdos de cuando éramos chiquitas...</p>
+            
+            <div class="photo-frame">
+                <!-- Reemplazá 'foto1.jpg' por el nombre de tu foto de infancia -->
+                <img src="foto1.jpg" alt="Recuerdo de infancia 1" onerror="this.src='https://via.placeholder.com/300x200/111/fff?text=Coloca+tu+foto1.jpg'">
+                <div class="year-tag">AÑO: 2008 (Época de infancias libres)</div>
+            </div>
+            
+            <button class="btn" onclick="nextScreen(3)">Siguiente Nivel ➔</button>
+        </div>
+
+        <!-- PANTALLA 3:  -->
+        <div id="screen-3" class="screen">
+            <h1>MISIÓN 3: ANÁLISIS DE MERCADO</h1>
+            <p>Estudiar marketing te dejó skills profesionales, así que analicemos este vínculo:</p>
+            
+            <div class="marketing-card">
+                <p>📊 <span>KPI Principal:</span> Cariño acumulado</p>
+                <p>📈 <span>Engagement:</span> 100% inalterable</p>
+                <p>🎯 <span>Target:</span> Pasarla joya en tus 22</p>
+            </div>
+            <p>Ninguna cátedra explica cómo se mantiene el afecto intacto a la distancia, ¡pero vos venís rompiéndola en todas tus metas!</p>
+            
+            <button class="btn" onclick="nextScreen(4)">Siguiente ➔</button>
+        </div>
+
+        <!-- PANTALLA 4: MENSAJE FINAL -->
+        <div id="screen-4" class="screen">
+            <h1>¡BOSS FINAL SUPERADO! 🎉</h1>
+            <div class="avatar-box">
+                <img src="avatar.png" alt="Tu Avatar">
+            </div>
+            <p style="text-align: left; font-size: 10px; line-height: 1.8;">
+                ¡Feliz cumple 22! Te quería armar esto para recordarte que te quiero muchísimo.<br><br>
+                Sé que crecimos, que los tiempos cambian y ya no charlamos tanto como de chicas, pero me alegra un montón ver todo lo que lográs y en la persona  en la que te estás convirtiendo.<br><br>
+                Espero que la pases hermoso  y disfrutes muchísimo  esta nueva vuelta al sol! 💖
+            </p>
+            <button class="btn" onclick="nextScreen(0)">🔄 Jugar de nuevo</button>
+        </div>
+
+        <div class="controls-hint">
+            [ Sistema Interactivo de Cumpleaños - Creado con cariño ]
+        </div>
+
+    </div>
+
+    <script>
+        let currentScreen = 0;
+        const totalScreens = 4;
+
+        function nextScreen(screenNum) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-' + screenNum).classList.add('active');
+            currentScreen = screenNum;
+        }
+
+        function checkDate() {
+            // Permite avanzar sin estresarse por la respuesta exacta, pero celebra si escriben algo
+            const val = document.getElementById('date-input').value.trim();
+            if(val !== "") {
+                document.getElementById('error-msg').style.display = 'none';
+                nextScreen(2);
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
